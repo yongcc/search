@@ -12,16 +12,16 @@ import javax.persistence.Table;
 @Table(name = "TB_KEYWORD", indexes = { @Index(columnList = "keyword") })
 public class Keyword {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String seq;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Integer seq;
 	@Column
 	private String keyword;
 
-	public String getSeq() {
+	public Integer getSeq() {
 		return seq;
 	}
 
-	public void setSeq(String seq) {
+	public void setSeq(Integer seq) {
 		this.seq = seq;
 	}
 

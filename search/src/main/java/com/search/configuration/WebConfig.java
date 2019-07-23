@@ -9,7 +9,7 @@ import com.search.interceptor.AuthInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-	private static final String[] EXCLUDE_PATHS = { "/member/**", "/error/**", "/searchBook" };
+	private static final String[] EXCLUDE_PATHS = { "/member/**", "/error/**", "/searchBook", "/**" };
 
 	@Autowired
 	private AuthInterceptor authInterceptor;

@@ -5,6 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtils {
+	public static String getCurrentDatetime() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return formatter.format(new Date());
+    }
+	
 	public static String convertDateString(String input) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+HH:mm");
 		Date date = null;

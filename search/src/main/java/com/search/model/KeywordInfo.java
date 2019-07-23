@@ -1,8 +1,8 @@
 package com.search.model;
 
-public class RecentSearch {
+public class KeywordInfo {
 	private String keyword;
-	private String date;
+	private Integer count;
 
 	public String getKeyword() {
 		return keyword;
@@ -12,12 +12,12 @@ public class RecentSearch {
 		this.keyword = keyword;
 	}
 
-	public String getDate() {
-		return date;
+	public Integer getCount() {
+		return count;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setCount(Integer count) {
+		this.count = count;
 	}
 
 }
