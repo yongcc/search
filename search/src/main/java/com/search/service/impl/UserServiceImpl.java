@@ -21,20 +21,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Optional<User> getUser(String id) {
-		if (id == null) {
-			return Optional.empty();
-		}
-
-		return userDao.findById(id);
+		return id == null ? Optional.empty() : userDao.findById(id);
+	}
+	
+	@Override
+	public User getUser(String id, String password) {
+		return getUser(id).filter(user -> user.getPwd().equals(password)).orElse(null);
 	}
 
 	@Override
 	public User mergeUser(User user) {
-		if (user == null) {
-			return null;
-		}
-
-		return userDao.save(user);
+		return user == null ? null : userDao.save(user);
 	}
 
 	@Override
