@@ -39,25 +39,4 @@ public class CustomErrorController extends BasicErrorController {
 		return new ResponseEntity<Map<String, Object>>(body, status);
 	}
 
-//	private static final String ERROR_PATH = "/error";
-//
-//	@Override
-//	public String getErrorPath() {
-//		return ERROR_PATH;
-//	}
-//	
-//	@RequestMapping(ERROR_PATH)
-//	public String handleError(HttpServletRequest request, Model model) {
-//		return "redirect:/";
-//	}
-//	
-//	public String error(HttpServletRequest request) {
-//		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-//
-//		if (String.valueOf(status).equalsIgnoreCase(HttpStatus.NOT_FOUND.toString())) {
-//			return "errors/404"; // /WEB-INF/errors/404.jsp
-//		}
-//		return "error";
-//	}
-
 }

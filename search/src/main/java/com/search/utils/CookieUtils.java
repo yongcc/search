@@ -24,7 +24,6 @@ public class CookieUtils {
 			}
 		}
 		return null;
-		//return Arrays.stream(cookies).filter(cookie -> cookieIds.contains(cookie.getName())).filter(cookie -> StringUtils.isNotEmpty(cookie.getValue())).collect(Collectors.toList());
 	}
 	
 }
