@@ -17,11 +17,6 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public Iterable<User> getAllUsers() {
-		return userDao.findAll();
-	}
-
-	@Override
 	public Optional<User> getUser(String id) {
 		return id == null ? Optional.empty() : userDao.findById(id);
 	}
@@ -37,12 +32,4 @@ public class UserServiceImpl implements UserService {
 		return user == null ? null : userDao.save(user);
 	}
 
-	@Override
-	public void removeUser(String id) {
-		if (id == null) {
-			return;
-		}
-
-		userDao.deleteById(id);
-	}
 }

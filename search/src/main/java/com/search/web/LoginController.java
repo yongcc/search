@@ -36,6 +36,9 @@ public class LoginController {
 	@Autowired
 	private JwtService jwtService;
 
+	/**
+	 * 회원가입
+	 */
 	@PostMapping("/signUp")
 	public Result signUp(@RequestBody SignUpParam param) {
 		Result result = new Result();
@@ -60,6 +63,8 @@ public class LoginController {
 			
 			User user = new User();
 			user.setId(param.getId());
+			
+			// 암호화
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String encodedPassword = passwordEncoder.encode(param.getPassword());
 			log.info("pwd: {}", encodedPassword);
@@ -76,6 +81,11 @@ public class LoginController {
 		return Result.successInstance();
 	}
 	
+	/**
+	 * 로그인
+	 * @param param
+	 * @return
+	 */
 	@PostMapping("/login")
 	public UserInfo login(@RequestBody LoginParam param) {
 		User user = userService.getUser(param.getId(), param.getPassword());
@@ -91,6 +101,10 @@ public class LoginController {
 		return info;
 	}
 
+	/**
+	 * id 조회
+	 * @return
+	 */
 	@GetMapping("/id")
 	public String id() {
 		Map<String, String> data = jwtService.getData(Constants.JWT.LOGIN_SALT, Constants.JWT.LOGIN_DATA_KEY);

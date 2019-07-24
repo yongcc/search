@@ -27,6 +27,13 @@ public class SearchController {
 	@Autowired
 	private KeywordService keywordService;
 	
+	/**
+	 * 도서 검색
+	 * @param param
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/book")
 	public SearchBookResult searchBook(@RequestBody SearchBookParam param, HttpServletRequest request, HttpServletResponse response) {
 		if(StringUtils.trimToNull(param.getQuery()) != null) {

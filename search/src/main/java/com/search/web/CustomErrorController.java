@@ -24,6 +24,9 @@ public class CustomErrorController extends BasicErrorController {
 		super(errorAttributes, serverProperties.getError(), errorViewResolvers);
 	}
 
+	/**
+	 * doc 처리
+	 */
 	@Override
 	@RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
 	public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
@@ -32,6 +35,9 @@ public class CustomErrorController extends BasicErrorController {
 		return modelAndView;
 	}
 
+	/**
+	 *나머지 처리
+	 */
 	@Override
 	public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
 		Map<String, Object> body = this.getErrorAttributes(request, this.isIncludeStackTrace(request, MediaType.ALL));

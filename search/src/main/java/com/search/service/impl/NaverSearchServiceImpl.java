@@ -28,6 +28,7 @@ public class NaverSearchServiceImpl implements SearchBookService {
 
 	@Override
 	public SearchBookResult searchBook(SearchBookParam searchBookParam) throws Exception {
+		// rq 세팅
 		NaverSearchBookParam param = new NaverSearchBookParam();
 		param.setQuery(searchBookParam.getQuery());
 		param.setDisplay(searchBookParam.getSize());
@@ -39,11 +40,13 @@ public class NaverSearchServiceImpl implements SearchBookService {
 		request.addHeader(Constants.AUTH.NAVER_ID_KEY, Constants.AUTH.NAVER_ID_VALUE);
 		request.addHeader(Constants.AUTH.NAVER_SECRET_KEY, Constants.AUTH.NAVER_SECRET_VALUE);
 
+		// 호출
 		NaverSearchBookResponse response = apiService.sendApi(request, NaverSearchBookResponse.class);
 		if (response == null) {
 			log.info("naver api rs is null");
 		}
 
+		// 변환
 		SearchBookResult result = new SearchBookResult();
 		result.setTotalCount(response.getTotal());
 		result.setMaxPage(response.getTotal() / (param.getDisplay() == null ? 10 : param.getDisplay()) + 1);

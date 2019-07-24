@@ -22,6 +22,7 @@ public class KeywordServiceImpl implements KeywordService {
 
 	@Override
 	public List<KeywordInfo> getKeywordInfos() {
+		// 키워드별 갯수 조회
 		List<KeywordInfo> keywordInfos = StreamSupport.stream(keywordDao.findAll().spliterator(), false)
 				.collect(Collectors.groupingBy(Keyword::getKeyword, Collectors.counting()))
 				.entrySet().stream().map(entry -> {

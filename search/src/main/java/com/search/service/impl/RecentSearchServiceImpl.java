@@ -27,22 +27,25 @@ public class RecentSearchServiceImpl implements RecentSearchService {
 	
 	@Override
 	public void createRecentSearch(String keyword, HttpServletRequest request, HttpServletResponse response) {
+		// 최근검색 조회
 		List<RecentSearch> recentSearches = getRecentSearches(request);
 		if(recentSearches == null) {
 			recentSearches = new ArrayList<>();
 		}
 		
+		// 신규 추가
 		RecentSearch search = new RecentSearch();
 		search.setKeyword(keyword);
 		search.setDate(DateUtils.getCurrentDatetime());
 		recentSearches.add(0, search);
 		
+		// 중복처리, 갯수
 		recentSearches = recentSearches.stream()
 				.filter(Utils.distinctByKey(RecentSearch::getKeyword))
 				.collect(Collectors.toList());
 		recentSearches = recentSearches.subList(0, Math.min(CookieInfo.RECENT_SEARCH.MAX_CNT, recentSearches.size()));
 		
-		// 쿠키 추가
+		// 쿠키 설정
 		String serializedValue = Serializer.serializeToBase64(new Gson().toJson(recentSearches));
 		CookieUtils.setCookie(response, CookieInfo.RECENT_SEARCH.KEY, serializedValue, CookieInfo.RECENT_SEARCH.EXPIRE);
 	}
@@ -61,6 +64,7 @@ public class RecentSearchServiceImpl implements RecentSearchService {
 		
 		if(recentSearches != null) {
 			//recentSearches.sort(Comparator.comparing(RecentSearch::getDate).reversed());
+			// 최대 갯수
 			recentSearches = recentSearches.subList(0, Math.min(CookieInfo.RECENT_SEARCH.MAX_CNT, recentSearches.size()));
 		}
 		

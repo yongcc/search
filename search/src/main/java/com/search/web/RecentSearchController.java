@@ -18,6 +18,11 @@ public class RecentSearchController {
 	@Autowired
 	private RecentSearchService recentSearchService;
 	
+	/**
+	 * 도서 최근 검색 조회
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/book")
 	public List<RecentSearch> recentSearch(HttpServletRequest request) {
 		return recentSearchService.getRecentSearches(request);

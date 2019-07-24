@@ -24,8 +24,10 @@ public class SearchServiceImpl implements SearchService {
 	public SearchBookResult searchBook(SearchBookParam param) {
 		SearchBookResult result = null;
 		
+		// 카카오 서비스 로드
 		SearchBookService searchBookService = searchBookServices.get(Constants.COMPANY_CODE.KAKAO);
 		try {
+			// 카카오 호출
 			result = searchBookService.searchBook(param);
 			if(result == null) {
 				throw new Exception();
@@ -33,8 +35,10 @@ public class SearchServiceImpl implements SearchService {
 		} catch (Exception e) {
 			log.warn("kakao search book failed: {}", e);
 			
+			// 네이버 서비스 로드
 			searchBookService = searchBookServices.get(Constants.COMPANY_CODE.NAVER);
 			try {
+				// 네이버 호출
 				result = searchBookService.searchBook(param);
 			} catch (Exception e2) {
 				log.warn("naver search book failed: {}", e2);

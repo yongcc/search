@@ -15,6 +15,9 @@ public class KeywordController {
 	@Autowired
 	private KeywordService keywordService;
 	
+	/**
+	 * 책 인기 키워드 조회
+	 */
 	@RequestMapping("/book")
 	public List<KeywordInfo> keyword() {
 		return keywordService.getKeywordInfos();

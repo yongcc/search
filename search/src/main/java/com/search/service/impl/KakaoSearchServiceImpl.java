@@ -30,6 +30,7 @@ public class KakaoSearchServiceImpl implements SearchBookService {
 
 	@Override
 	public SearchBookResult searchBook(SearchBookParam searchBookParam) throws Exception {
+		// rq 세팅
 		KakaoSearchBookParam param = new KakaoSearchBookParam();
 		param.setQuery(searchBookParam.getQuery());
 		param.setSize(searchBookParam.getSize());
@@ -38,11 +39,13 @@ public class KakaoSearchServiceImpl implements SearchBookService {
 		HttpGet request = new HttpGet(Constants.API_URL.KAKAO_SEARCH_BOOK + param.getQueryString());
 		request.addHeader(HttpHeaders.AUTHORIZATION, Constants.AUTH.KAKAO_API);
 
+		// 호출
 		KakaoSearchBookResponse response = apiService.sendApi(request, KakaoSearchBookResponse.class);
 		if (response == null) {
 			log.info("kakao api rs is null");
 		}
 
+		// 변환
 		SearchBookResult result = new SearchBookResult();
 		result.setTotalCount(response.getMeta().getTotal_count());
 
