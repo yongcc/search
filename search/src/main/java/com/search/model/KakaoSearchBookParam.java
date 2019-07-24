@@ -51,10 +51,10 @@ public class KakaoSearchBookParam {
 		StringBuilder sb = new StringBuilder();
 		sb.append("?");
 		if(query != null) sb.append("query=").append(query);
-		if(sort != null) sb.append("sort=").append(sort);
-		if(page != null) sb.append("page=").append(page);
-		if(size != null) sb.append("size=").append(size);
-		if(target != null) sb.append("target=").append(target);
+		if(sort != null) sb.append("&sort=").append(sort);
+		if(page != null) sb.append("&page=").append(page);
+		if(size != null) sb.append("&size=").append(size);
+		if(target != null) sb.append("&target=").append(target);
 		return sb.toString();
 	}
 }

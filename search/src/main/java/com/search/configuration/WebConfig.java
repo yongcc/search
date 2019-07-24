@@ -9,13 +9,14 @@ import com.search.interceptor.AuthInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-	private static final String[] EXCLUDE_PATHS = { "/member/**", "/error/**", "/searchBook", "/signin" };
+	private static final String[] AUTH_PATHS = { "/search/**", "/recent/**", "/keyword/**", "/user/id/**" };
+	private static final String[] AUTH_EXCLUDE_PATHS = {  };
 
 	@Autowired
 	private AuthInterceptor authInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns(EXCLUDE_PATHS);
+		registry.addInterceptor(authInterceptor).addPathPatterns(AUTH_PATHS).excludePathPatterns(AUTH_EXCLUDE_PATHS);
 	}
 }

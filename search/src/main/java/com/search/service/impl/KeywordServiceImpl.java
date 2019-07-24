@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,13 @@ public class KeywordServiceImpl implements KeywordService {
 	
 	@Override
 	public void createKeyword(String keyword) {
+		String convertKeyword = Utils.removeSpChar(keyword);
+		if(StringUtils.isEmpty(convertKeyword)) {
+			return;
+		}
+		
 		Keyword entity = new Keyword();
-		entity.setKeyword(Utils.removeSpChar(keyword));
+		entity.setKeyword(convertKeyword);
 		
 		keywordDao.save(entity);
 	}

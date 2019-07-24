@@ -4,10 +4,11 @@ import java.util.Map;
 
 public interface JwtService {
 
-	<T> String create(String key, T data, String subject);
+	String create(String salt, String dataKey, Map<String, String> data);
 
-	boolean isUsable(String token);
+	boolean isUsable(String salt, String token);
 
-	Map<String, Object> getData(String token);
+	Map<String, String> getData(String salt, String key);
+
 
 }

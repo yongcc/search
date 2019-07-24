@@ -25,24 +25,22 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtServiceImpl implements JwtService {
 	private Logger log = LoggerFactory.getLogger(JwtServiceImpl.class);
 	
-	private static final String SALT = "luvookSecret";
-
 	@Override
-	public <T> String create(String key, T data, String subject) {
+	public String create(String salt, String dataKey, Map<String, String> data) {
 		String jwt = Jwts.builder()
 				.setHeaderParam("typ", "JWT")
 				.setHeaderParam("regDate", System.currentTimeMillis())
-				.setSubject(subject).claim(key, data)
-				.signWith(SignatureAlgorithm.HS256, generateKey())
+				.claim(dataKey, data)
+				.signWith(SignatureAlgorithm.HS256, generateKey(salt))
 				.compact();
 		
 		return jwt;
 	}
 
-	private byte[] generateKey() {
+	private byte[] generateKey(String salt) {
 		byte[] key = null;
 		try {
-			key = SALT.getBytes("UTF-8");
+			key = salt.getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			log.error("generate jwt key error: {}", e);
 		}
@@ -50,28 +48,28 @@ public class JwtServiceImpl implements JwtService {
 	}
 
 	@Override
-	public boolean isUsable(String token) {
+	public boolean isUsable(String salt, String token) {
 		try {
-			Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(token);
+			Jwts.parser().setSigningKey(generateKey(salt)).parseClaimsJws(token);
 			return true;
 		} catch (Exception e) {
-			log.info("unauthorized: {}", e);
+			log.info("unauthorized: {}", e.toString());
 			throw new UnauthorizedException();
 		}
 	}
 	
 	@Override
-	public Map<String, Object> getData(String token) {
+	public Map<String, String> getData(String salt, String key) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-		String jwt = request.getHeader(HttpHeaders.AUTHORIZATION);
+		String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 		Jws<Claims> claims = null;
 		try {
-			claims = Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(jwt);
+			claims = Jwts.parser().setSigningKey(salt.getBytes("UTF-8")).parseClaimsJws(token);
 		} catch (Exception e) {
 			throw new UnauthorizedException();
 		}
 		@SuppressWarnings("unchecked")
-		Map<String, Object> value = (LinkedHashMap<String, Object>) claims.getBody().get(token);
+		Map<String, String> value = (LinkedHashMap<String, String>) claims.getBody().get(key);
 		return value;
 	}
 }

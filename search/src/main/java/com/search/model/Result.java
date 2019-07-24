@@ -8,6 +8,18 @@ public class Result {
 
 	private Object data;
 
+	public Result() {
+	}
+
+	public Result(String message) {
+		setMessage(message);
+	}
+
+	public Result(String code, String message) {
+		setCode(code);
+		setMessage(message);
+	}
+
 	public String getCode() {
 		return code;
 	}

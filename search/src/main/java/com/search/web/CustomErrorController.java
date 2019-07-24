@@ -1,23 +1,63 @@
 package com.search.web;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
-import org.springframework.boot.web.servlet.error.ErrorController;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class CustomErrorController implements ErrorController {
-	private static final String ERROR_PATH = "/error";
+public class CustomErrorController extends BasicErrorController {
+
+	public CustomErrorController(ErrorAttributes errorAttributes, ServerProperties serverProperties, List<ErrorViewResolver> errorViewResolvers) {
+		super(errorAttributes, serverProperties.getError(), errorViewResolvers);
+	}
 
 	@Override
-	public String getErrorPath() {
-		return ERROR_PATH;
+	@RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
+	public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/");
+		return modelAndView;
 	}
-	
-	@RequestMapping("/error")
-	public String handleError(HttpServletRequest request, Model model) {
-		return "redirect:/";
+
+	@Override
+	public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
+		Map<String, Object> body = this.getErrorAttributes(request, this.isIncludeStackTrace(request, MediaType.ALL));
+		HttpStatus status = this.getStatus(request);
+		return new ResponseEntity<Map<String, Object>>(body, status);
 	}
+
+//	private static final String ERROR_PATH = "/error";
+//
+//	@Override
+//	public String getErrorPath() {
+//		return ERROR_PATH;
+//	}
+//	
+//	@RequestMapping(ERROR_PATH)
+//	public String handleError(HttpServletRequest request, Model model) {
+//		return "redirect:/";
+//	}
+//	
+//	public String error(HttpServletRequest request) {
+//		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+//
+//		if (String.valueOf(status).equalsIgnoreCase(HttpStatus.NOT_FOUND.toString())) {
+//			return "errors/404"; // /WEB-INF/errors/404.jsp
+//		}
+//		return "error";
+//	}
+
 }

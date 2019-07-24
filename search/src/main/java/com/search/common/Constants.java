@@ -18,7 +18,12 @@ public class Constants {
 		public static final String KAKAO = "K";
 		public static final String NAVER = "N";
 	}
-	
+
 	public static final Integer MAX_KEYWORD_COUNT = 10;
+
+	public static class JWT {
+		public static final String LOGIN_SALT = "SecretSecret";
+		public static final String LOGIN_DATA_KEY = "loginData";
+	}
 
 }

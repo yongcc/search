@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.search.common.Constants;
 import com.search.exception.UnauthorizedException;
 import com.search.service.JwtService;
 
@@ -22,7 +23,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		final String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
 		try {
-			jwtService.isUsable(token);
+			jwtService.isUsable(Constants.JWT.LOGIN_SALT, token);
 			return true;
 		} catch (UnauthorizedException e) {
 			response.sendError(HttpStatus.UNAUTHORIZED.value(), e.getMessage());

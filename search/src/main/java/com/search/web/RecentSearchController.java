@@ -12,12 +12,13 @@ import com.search.model.RecentSearch;
 import com.search.service.RecentSearchService;
 
 @RestController
+@RequestMapping("/recent")
 public class RecentSearchController {
 	
 	@Autowired
 	private RecentSearchService recentSearchService;
 	
-	@RequestMapping("/recentSearch")
+	@RequestMapping("/book")
 	public List<RecentSearch> recentSearch(HttpServletRequest request) {
 		return recentSearchService.getRecentSearches(request);
 	}

@@ -7,25 +7,28 @@ Vue.use(Vuex)
 const enhanceAccessToeken = () => {
   const {accessToken} = localStorage
   if (!accessToken) return
-  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+  axios.defaults.headers.common['Authorization'] = `${accessToken}`
 }
 enhanceAccessToeken()
 
 export const store = new Vuex.Store({
   state: {
-    accessToken: null
+    accessToken: null,
+    searchBookParam: null,
+    searchBookData: null,
+    searchBookDetail: null
   },
   getters: {
 
   },
   actions: {
-    LOGIN ({commit}, {email, password}) {
-      return axios.post('/login', {email, password})
+    LOGIN ({commit}, {id, password}) {
+      return axios.post('/user/login', {id, password}, {headers: {'Content-Type': 'application/json'}})
         .then(({data}) => {
           // LOGIN 변이 실행
           commit('LOGIN', data)
           // 모든 HTTP 요청 헤더에 Authorization 을 추가한다.
-          axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`
+          axios.defaults.headers.common['Authorization'] = `${data.accessToken}`
         })
     },
     LOGOUT ({commit}) {

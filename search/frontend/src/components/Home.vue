@@ -1,7 +1,11 @@
 <template>
   <div>
-    <h2>Home</h2>
-    <div>{{greeting}}</div>
+    <div>
+      <h2 v-on:click="logout()">[logout]</h2>
+    </div>
+    <div>
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -10,14 +14,23 @@ import axios from 'axios'
 
 export default {
   name: 'Home',
-  data() {
+  data () {
     return {
       greeting: ''
     }
   },
-  created() {
-    axios.get('/home')
-      .then(result => this.greeting = result.data.greeting)
+  created () {
+    axios.get('/user/id').then((data) => {
+      this.$router.push('/search/book')
+    }).catch(() => {
+      this.$router.push('/')
+    })
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('LOGOUT')
+      this.$router.push('/')
+    }
   }
 }
 </script>

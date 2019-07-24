@@ -2,7 +2,10 @@ package com.search.service.impl;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.search.dao.UserDao;
@@ -11,6 +14,8 @@ import com.search.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
+	private Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+	
 	@Autowired
 	private UserDao userDao;
 
@@ -26,7 +31,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getUser(String id, String password) {
-		return getUser(id).filter(user -> user.getPwd().equals(password)).orElse(null);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return getUser(id).filter(user -> passwordEncoder.matches(password, user.getPwd())).orElse(null);
 	}
 
 	@Override

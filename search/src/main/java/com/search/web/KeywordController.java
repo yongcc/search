@@ -10,11 +10,12 @@ import com.search.model.KeywordInfo;
 import com.search.service.KeywordService;
 
 @RestController
+@RequestMapping(("/keyword"))
 public class KeywordController {
 	@Autowired
 	private KeywordService keywordService;
 	
-	@RequestMapping("/keyword")
+	@RequestMapping("/book")
 	public List<KeywordInfo> keyword() {
 		return keywordService.getKeywordInfos();
 	}

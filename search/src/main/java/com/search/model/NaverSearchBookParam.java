@@ -114,17 +114,17 @@ public class NaverSearchBookParam {
 		StringBuilder sb = new StringBuilder();
 		sb.append("?");
 		if(query != null) sb.append("query=").append(query);
-		if(display != null) sb.append("display=").append(display);
-		if(start != null) sb.append("start=").append(start);
-		if(sort != null) sb.append("sort=").append(sort);
-		if(d_titl != null) sb.append("d_titl=").append(d_titl);
-		if(d_auth != null) sb.append("d_auth=").append(d_auth);
-		if(d_cont != null) sb.append("d_cont=").append(d_cont);
-		if(d_isbn != null) sb.append("d_isbn=").append(d_isbn);
-		if(d_publ != null) sb.append("d_publ=").append(d_publ);
-		if(d_dafr != null) sb.append("d_dafr=").append(d_dafr);
-		if(d_dato != null) sb.append("d_dato=").append(d_dato);
-		if(d_catg != null) sb.append("d_catg=").append(d_catg);
+		if(display != null) sb.append("&display=").append(display);
+		if(start != null) sb.append("&start=").append(start);
+		if(sort != null) sb.append("&sort=").append(sort);
+		if(d_titl != null) sb.append("&d_titl=").append(d_titl);
+		if(d_auth != null) sb.append("&d_auth=").append(d_auth);
+		if(d_cont != null) sb.append("&d_cont=").append(d_cont);
+		if(d_isbn != null) sb.append("&d_isbn=").append(d_isbn);
+		if(d_publ != null) sb.append("&d_publ=").append(d_publ);
+		if(d_dafr != null) sb.append("&d_dafr=").append(d_dafr);
+		if(d_dato != null) sb.append("&d_dato=").append(d_dato);
+		if(d_catg != null) sb.append("&d_catg=").append(d_catg);
 		return sb.toString();
 	}
 
